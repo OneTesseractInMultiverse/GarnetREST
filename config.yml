@@ -1,0 +1,14 @@
+COMMON: &common
+  SECRET_KEY: insecure
+    
+DEVELOPMENT: &development
+  <<: *common
+  DEBUG: True
+  
+STAGING: &staging
+  <<: *common
+  SECRET_KEY: sortasecure
+  
+PRODUCTION: &production
+  <<: *common
+  SECRET_KEY: shouldbereallysecureatsomepoint
