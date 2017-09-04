@@ -6,8 +6,8 @@ After=network.target
 User=subvertic
 Group=www-data
 WorkingDirectory=/home/subvertic/apps/subvertic
-Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
-ExecStart=/home/sammy/myproject/myprojectenv/bin/uwsgi --ini myproject.ini
+Environment="PATH=/home/subvertic/apps/subvertic/bin"
+ExecStart=/home/subvertic/apps/subvertic/bin/uwsgi --ini subvertic.ini
 
 [Install]
 WantedBy=multi-user.target
