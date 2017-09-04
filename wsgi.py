@@ -1,4 +1,4 @@
-from subvertic import app
+from garnet import app
 
 if __name__ == "__main__":
     app.run()
