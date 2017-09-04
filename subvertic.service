@@ -1,0 +1,13 @@
+[Unit]
+Description=uWSGI instance to serve subvertic
+After=network.target
+
+[Service]
+User=subvertic
+Group=www-data
+WorkingDirectory=/home/subvertic/apps/subvertic
+Environment="PATH=/home/sammy/myproject/myprojectenv/bin"
+ExecStart=/home/sammy/myproject/myprojectenv/bin/uwsgi --ini myproject.ini
+
+[Install]
+WantedBy=multi-user.target
