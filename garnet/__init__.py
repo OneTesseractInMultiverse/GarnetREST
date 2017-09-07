@@ -6,6 +6,7 @@ from flask import Flask as FlaskBase, Config as ConfigBase
 from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
 
+
 # ------------------------------------------------------------------------------
 # CLASS CONFIG
 # ------------------------------------------------------------------------------
@@ -53,11 +54,12 @@ class Garnet(FlaskBase):
         if instance_relative:
             root_path = self.instance_path
         return Config(root_path, self.default_config)
- 
+
+
 # ------------------------------------------------------------------------------
 # SETUP GENERAL APPLICATION
 # ------------------------------------------------------------------------------
-__version__ = '1.0'
+__version__ = '1.0.0'
 app = Garnet('Garnet')
 app.config.from_yaml(
         os.path.join(app.root_path, 'config.yml'), 
@@ -78,4 +80,4 @@ jwt = JWTManager(app)
 # ------------------------------------------------------------------------------
 # LOAD ENDPOINTS
 # ------------------------------------------------------------------------------
-from garnet.endpoints import *
+from garnet.interfaces import *
