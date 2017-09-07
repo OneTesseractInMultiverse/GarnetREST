@@ -3,6 +3,7 @@
 import os
 import yaml
 from flask import Flask as FlaskBase, Config as ConfigBase
+from flask_mongoengine import MongoEngine
 from flask_jwt_extended import JWTManager
 
 # ------------------------------------------------------------------------------
@@ -62,12 +63,17 @@ app.config.from_yaml(
         os.path.join(app.root_path, 'config.yml'), 
         mode='development'
     )
+ 
+# ------------------------------------------------------------------------------
+# SETUP MONGO DATABASE
+# ------------------------------------------------------------------------------   
+db = MongoEngine(app)
 
 # ------------------------------------------------------------------------------
 # SETUP JWT
 # ------------------------------------------------------------------------------
 
-jwt = JWTManager(app)
+jwt = JWTManager(app) 
 
 # ------------------------------------------------------------------------------
 # LOAD ENDPOINTS

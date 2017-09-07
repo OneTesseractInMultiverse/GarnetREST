@@ -1,14 +1,27 @@
 COMMON: &common
-  SECRET_KEY: insecure
+  JWT_TOKEN_LOCATION: headers
     
 DEVELOPMENT: &development
   <<: *common
   DEBUG: True
+  MONGODB_DB: aqrpapp
+  MONGODB_HOST: ds052649.mlab.com
+  MONGODB_PORT: 52649
+  MONGODB_USERNAME: aqrp
+  MONGODB_PASSWORD: Wstinol1234.
+  SECRET_KEY: IAeX8aIPyN7xmTpIg
   
 STAGING: &staging
   <<: *common
-  SECRET_KEY: sortasecure
+  DEBUG: True
+  MONGODB_DB: aqrpapp
+  MONGODB_HOST: ds052649.mlab.com
+  MONGODB_PORT: 52649
+  MONGODB_USERNAME: aqrp
+  MONGODB_PASSWORD: Wstinol1234.
+  SECRET_KEY: IAeX8aIPyN7xmTpIg
+  SECRET_KEY: shSO0V1fSUFATtmdnzt
   
 PRODUCTION: &production
   <<: *common
-  SECRET_KEY: shouldbereallysecureatsomepoint
+  SECRET_KEY: BnN01ERfYl3QXo3Slza
