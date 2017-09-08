@@ -4,21 +4,25 @@ COMMON: &common
 DEVELOPMENT: &development
   <<: *common
   DEBUG: True
-  MONGODB_DB: aqrpapp
-  MONGODB_HOST: ds052649.mlab.com
-  MONGODB_PORT: 52649
-  MONGODB_USERNAME: aqrp
-  MONGODB_PASSWORD: Wstinol1234.
+
+  MONGODB_DB: garnet
+  MONGODB_HOST: localhost
+  MONGODB_PORT: 27017
+  MONGODB_USERNAME: garnet
+  MONGODB_PASSWORD: change_me
+
   SECRET_KEY: IAeX8aIPyN7xmTpIg
   
 STAGING: &staging
   <<: *common
   DEBUG: True
+
   MONGODB_DB: aqrpapp
   MONGODB_HOST: ds052649.mlab.com
   MONGODB_PORT: 52649
   MONGODB_USERNAME: aqrp
   MONGODB_PASSWORD: Wstinol1234.
+
   SECRET_KEY: IAeX8aIPyN7xmTpIg
   SECRET_KEY: shSO0V1fSUFATtmdnzt
   
