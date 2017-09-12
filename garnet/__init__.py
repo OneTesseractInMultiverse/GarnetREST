@@ -80,4 +80,4 @@ jwt = JWTManager(app)
 # ------------------------------------------------------------------------------
 # LOAD ENDPOINTS
 # ------------------------------------------------------------------------------
-from garnet.interfaces import *
+from garnet.endpoints import *

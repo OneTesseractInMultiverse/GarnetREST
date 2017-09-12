@@ -17,3 +17,18 @@ class AccessToken:
     __identity = None
     __access_token = None
     __refresh_token = None
+
+    # --------------------------------------------------------------------------
+    # CONSTRUCTOR METHOD
+    # --------------------------------------------------------------------------
+    def __init__(self, identity):
+        self.__identity = identity
+
+    # --------------------------------------------------------------------------
+    # METHOD TO DICTIONARY
+    # --------------------------------------------------------------------------
+    def to_dict(self):
+        return {
+            "access_token": self.__access_token,
+
+        }

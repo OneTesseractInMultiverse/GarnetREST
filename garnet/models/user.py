@@ -36,6 +36,8 @@ class User(Document):
 
     date_modified = DateTimeField(default=datetime.datetime.now)
 
+    claims = ListField(StringField(max_length=120))
+
     meta = {
         'indexes': [
             'user_id',
@@ -95,13 +97,56 @@ class User(Document):
         self.user_id = state["user_id"]
         return
 
+    # --------------------------------------------------------------------------
+    # METHOD ADD CLAIM
+    # --------------------------------------------------------------------------
+    def add_claim(self, claim):
+        """
+            Add a new claim to a given user and saves the new claim in the Database
+            :param claim: The new claim to be added
+            :return: True if claim was added, False if claim was no added to the
+                     user.
+        """
+        if claim not in self.claims:
+            claims.append(claim)
+            self.save()
+            return True;
+        else:
+            return False
+
 
 # ------------------------------------------------------------------------------
 # GET USER BY ID
 # ------------------------------------------------------------------------------
 def get_user_by_id(user_id):
+    """
+        Tries to find a given instance of user by using its username. If the user
+        exists and was found, an instance of user is returned, else, None is
+        returned meaning that the system was unable to find a user with the given
+        username.
+    """
     try:
         user = User.objects.get(user_id=user_id)
+        return user
+    except DoesNotExist:
+        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
+    except MultipleObjectsReturned:
+        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + user_id)
+    return None
+
+
+# ------------------------------------------------------------------------------
+# GET USER BY USERNAME
+# ------------------------------------------------------------------------------
+def get_user_by_username(usrname):
+    """
+        Tries to find a given instance of user by using its username. If the user
+        exists and was found, an instance of user is returned, else, None is
+        returned meaning that the system was unable to find a user with the given
+        username.
+    """
+    try:
+        user = User.objects.get(username=usrname)
         return user
     except DoesNotExist:
         app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
