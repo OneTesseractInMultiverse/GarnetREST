@@ -8,5 +8,5 @@ include
 include/*
 .Python
 garnet/__pycache__/
-garnet/interfaces/__pycache__/
+garnet/endpoints/__pycache__/
 pip-selfcheck.json

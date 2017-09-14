@@ -29,6 +29,6 @@ class AccessToken:
     # --------------------------------------------------------------------------
     def to_dict(self):
         return {
-            "access_token": self.__access_token,
+            "access_token": self.__access_token
 
         }

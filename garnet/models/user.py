@@ -63,6 +63,26 @@ class User(Document):
         return safe_str_cmp(self.password.encode('utf-8'), challenge.encode('utf-8'))
 
     # --------------------------------------------------------------------------
+    # METHOD UPDATE PASSWORD
+    # --------------------------------------------------------------------------
+    def update_password(self, password):
+        self.password = compute_hash(password, self.salt)
+        return True
+
+    # --------------------------------------------------------------------------
+    # METHOD UPDATE EMAIL
+    # --------------------------------------------------------------------------
+    def update_email(self, email):
+        """
+            Updates the user's email with a new email.
+            :param email: The new email address that is going to be assigned to the
+                          user.
+            :return: True if the email was updated successfully
+        """
+        self.email = email
+        return True
+
+    # --------------------------------------------------------------------------
     # METHOD DICT
     # --------------------------------------------------------------------------
     def to_dict(self):
@@ -108,9 +128,8 @@ class User(Document):
                      user.
         """
         if claim not in self.claims:
-            claims.append(claim)
-            self.save()
-            return True;
+            self.claims.append(claim)
+            return True
         else:
             return False
 
@@ -147,6 +166,26 @@ def get_user_by_username(usrname):
     """
     try:
         user = User.objects.get(username=usrname)
+        return user
+    except DoesNotExist:
+        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
+    except MultipleObjectsReturned:
+        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + user_id)
+    return None
+
+
+# ------------------------------------------------------------------------------
+# GET USER BY USERNAME
+# ------------------------------------------------------------------------------
+def get_user_by_email(email):
+    """
+        Tries to find a given instance of user by using its username. If the user
+        exists and was found, an instance of user is returned, else, None is
+        returned meaning that the system was unable to find a user with the given
+        username.
+    """
+    try:
+        user = User.objects.get(email=email)
         return user
     except DoesNotExist:
         app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
