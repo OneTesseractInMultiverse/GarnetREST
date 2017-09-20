@@ -168,9 +168,9 @@ def get_user_by_username(usrname):
         user = User.objects.get(username=usrname)
         return user
     except DoesNotExist:
-        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
+        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + usrname)
     except MultipleObjectsReturned:
-        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + user_id)
+        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + usrname)
     return None
 
 
@@ -188,7 +188,7 @@ def get_user_by_email(email):
         user = User.objects.get(email=email)
         return user
     except DoesNotExist:
-        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + user_id)
+        app.logger.warning('A retrieval attempt of non-existing user occurred: ' + email)
     except MultipleObjectsReturned:
-        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + user_id)
+        app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + email)
     return None

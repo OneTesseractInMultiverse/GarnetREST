@@ -1,5 +1,7 @@
 COMMON: &common
   JWT_TOKEN_LOCATION: headers
+  JWT_REFRESH_TOKEN_VALIDITY_DAYS: 90
+  JWT_ACCESS_TOKEN_VALIDITY_HOURS: 2
     
 DEVELOPMENT: &development
   <<: *common

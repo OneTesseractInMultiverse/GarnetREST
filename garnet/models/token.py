@@ -23,6 +23,7 @@ class AccessToken:
     # --------------------------------------------------------------------------
     def __init__(self, identity):
         self.__identity = identity
+        self.__access_token = create_access_token(identity=self.__identity)
 
     # --------------------------------------------------------------------------
     # METHOD TO DICTIONARY
