@@ -10,3 +10,4 @@ include/*
 garnet/__pycache__/
 garnet/endpoints/__pycache__/
 pip-selfcheck.json
+*.pyc

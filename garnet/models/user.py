@@ -231,14 +231,20 @@ def build_account(account_data):
         if password is None:
             return None
 
-        return User(
-            user_id=uuid.uuid4(),
+        user = User(
+            user_id=str(uuid.uuid4()),
             name=name,
             last_name=last_name,
             username=username,
-            email=email,
-            password=password
+            email=email
         )
+
+        # We set the password by calling the update function that handles
+        # proper hashing of the password so we never store the actual
+        # password
+
+        user.update_password(password)
+        return user
 
     except:
         return None
