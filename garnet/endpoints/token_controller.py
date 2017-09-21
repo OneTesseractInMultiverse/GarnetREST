@@ -91,11 +91,11 @@ def post_token():
         if user.authenticate(password):
 
             # ACCESS TOKEN
-            access_token_expires = datetime.timedelta(hours=2)
+            access_token_expires = app.config['JWT_ACCESS_TOKEN_VALIDITY_HOURS']
             access_token = create_access_token(identity=user.user_id, expires_delta=access_token_expires)
 
             # REFRESH TOKEN
-            refresh_token_expires = datetime.timedelta(days=90)
+            refresh_token_expires = app.config['JWT_REFRESH_TOKEN_VALIDITY_DAYS']
             refresh_token = create_refresh_token(identity=user.user_id, expires_delta=refresh_token_expires)
 
             app.logger.info('A new token has been generated for user [' + user.user_id + "]")

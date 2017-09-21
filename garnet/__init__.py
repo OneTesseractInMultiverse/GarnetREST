@@ -61,10 +61,7 @@ class Garnet(FlaskBase):
 # ------------------------------------------------------------------------------
 __version__ = '1.0.0'
 app = Garnet('Garnet')
-app.config.from_yaml(
-        os.path.join(app.root_path, 'config.yml'), 
-        mode='development'
-    )
+app.config.from_object('config')
  
 # ------------------------------------------------------------------------------
 # SETUP MONGO DATABASE
