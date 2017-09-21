@@ -4,6 +4,7 @@ from garnet.extensions.security.gcrypt import compute_hash
 from werkzeug.security import safe_str_cmp
 from mongoengine import *
 import datetime
+import uuid
 
 
 # ------------------------------------------------------------------------------
@@ -192,3 +193,52 @@ def get_user_by_email(email):
     except MultipleObjectsReturned:
         app.logger.error('The username has more than 1 match in database. Urgent revision required. ' + email)
     return None
+
+
+# ------------------------------------------------------------------------------
+# BUILD_ACCOUNT
+# ------------------------------------------------------------------------------
+def build_account(account_data):
+    """
+        Validates a given dictionary containing information required to create 
+        a new user account and if it is correct, returns a instance of User, if 
+        not or any of the required parameters are missing, then None is returned
+        
+        :param account_data: A dictionary containing the necessary information 
+                to create a new user account. 
+        :return: None if some required data is missing and instance of User if
+                all data is correct
+    """
+
+    try:
+        name = account_data['name']
+        if name is None:
+            return None
+
+        last_name = account_data['last_name']
+        if last_name is None:
+            return None
+
+        username = account_data['username']
+        if username is None:
+            return None
+
+        email = account_data['email']
+        if email is None:
+            return None
+
+        password = account_data['password']
+        if password is None:
+            return None
+
+        return User(
+            user_id=uuid.uuid4(),
+            name=name,
+            last_name=last_name,
+            username=username,
+            email=email,
+            password=password
+        )
+
+    except:
+        return None

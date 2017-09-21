@@ -1,14 +1,21 @@
 from garnet import app
-from flask import jsonify
-    
+from flask import jsonify, request
+
+
 # --------------------------------------------------------------------------
-# ROOT RESOURCE OF THE API
+# GET: /ACCOUNT
 # --------------------------------------------------------------------------
-#
 @app.route('/', methods=['GET'])
 def get_root():
-    return jsonify({
-        "platform": "GarnetREST 1.0",
-        "version": "1.0.0",
-        "message": "Server is running!"
-    })
+    """
+        Gets the requester's IP Address and the User Agent and builds a tiny 
+        service status response message
+        :return: Status response json
+    """
+    return jsonify(
+        {
+            "ApiPlatform": "GarnetREST API 1.0.0",
+            "IP Address": request.remote_addr,
+            "User Agent": request.headers.get('User-Agent')
+        }
+    ), 200
