@@ -1,10 +1,12 @@
-from garnet import app
-from garnet.extensions.security.entropy import gen_salt
-from garnet.extensions.security.gcrypt import compute_hash
-from werkzeug.security import safe_str_cmp
-from mongoengine import *
 import datetime
 import uuid
+
+from mongoengine import *
+from werkzeug.security import safe_str_cmp
+
+from garnet import app
+from garnet.extensions.security.crypto.entropy import gen_salt
+from garnet.extensions.security.crypto.message_integrity import compute_hash
 
 
 # ------------------------------------------------------------------------------
