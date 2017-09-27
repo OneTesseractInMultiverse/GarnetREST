@@ -1,8 +1,10 @@
 import datetime
 import uuid
+import nacl.pwhash
 
 from mongoengine import *
 from werkzeug.security import safe_str_cmp
+from nacl.pwhash import verify_scryptsalsa208sha256
 
 from garnet import app
 from garnet.extensions.security.crypto.entropy import gen_salt
@@ -35,8 +37,6 @@ class User(Document):
 
     password = StringField(max_length=256, required=True)
 
-    salt = StringField(max_length=17, required=True, default=gen_salt(17))
-
     date_modified = DateTimeField(default=datetime.datetime.now)
 
     claims = ListField(StringField(max_length=120))
@@ -62,14 +62,27 @@ class User(Document):
             :return: True if the authentication was successful and the password is
                      correct
         """
-        challenge = compute_hash(password, self.salt)
-        return safe_str_cmp(self.password.encode('utf-8'), challenge.encode('utf-8'))
+        proposed = password.encode('utf-8')
+        serialized = self.password.encode('utf-8')
+        if serialized.startswith(b'$7$'):
+            res = verify_scryptsalsa208sha256(serialized, proposed)
+        else:
+            raise ValueError('Unknown serialization format')
+        return res
 
     # --------------------------------------------------------------------------
     # METHOD UPDATE PASSWORD
     # --------------------------------------------------------------------------
     def update_password(self, password):
-        self.password = compute_hash(password, self.salt)
+        """
+            Hashes and securely stores the password in a way that can be verifiable
+            but cannot be decrypted.
+
+            :param password: The password that will be set to be used as auth mechanism
+                             for the user.
+            :return:         True if operation completed successfully
+        """
+        self.password = str(nacl.pwhash.scryptsalsa208sha256_str(password.encode('utf-8')))
         return True
 
     # --------------------------------------------------------------------------
